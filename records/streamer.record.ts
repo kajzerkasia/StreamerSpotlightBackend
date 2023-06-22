@@ -37,9 +37,9 @@ export class StreamerRecord implements StreamerEntity {
         return results.map(obj => new StreamerRecord(obj));
     }
 
-    static async getOne(id: string): Promise<StreamerRecord | null> {
+    static async getOne(streamerId: string): Promise<StreamerRecord | null> {
         const [results] = await pool.execute("SELECT * from `streamers` WHERE `id` = :id", {
-            id,
+            streamerId,
         }) as StreamerRecordResults;
         return results.length === 0 ? null : new StreamerRecord(results[0]);
     }
