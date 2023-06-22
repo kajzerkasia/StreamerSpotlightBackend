@@ -12,9 +12,9 @@ app.use(json());
 
 // Routes...
 
-app.get('/', async (req, res) => {
-    throw new ValidationError('Daaamn!');
-});
+// app.get('/', async (req, res) => {
+//     throw new ValidationError('Daaamn!');
+// });
 
 app.use(handleError);
 
