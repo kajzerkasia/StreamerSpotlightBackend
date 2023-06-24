@@ -1,7 +1,8 @@
-import express, {json} from "express";
+import express, {json, Router} from "express";
 import cors from 'cors';
 import 'express-async-errors';
-import {handleError, ValidationError} from "./utils/errors";
+import {handleError} from "./utils/errors";
+import {streamerRouter} from "./routers/streamer.router";
 
 const app = express();
 
@@ -10,11 +11,9 @@ app.use(cors({
 }));
 app.use(json());
 
-// Routes...
+const router = Router();
 
-app.get('/', async (req, res) => {
-    throw new ValidationError('Daaamn!');
-});
+router.use('/streamer', streamerRouter);
 
 app.use(handleError);
 

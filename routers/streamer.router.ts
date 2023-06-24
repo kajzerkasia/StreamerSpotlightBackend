@@ -36,17 +36,34 @@ export const streamerRouter = Router()
         res.end();
     })
 
-    .put('/streamers/:streamerId/vote', async (req, res) => {
+    // .put('/streamers/:streamerId/vote', async (req, res) => {
+    //
+    //     const streamer = await StreamerRecord.getOne(req.params.streamerId);
+    //
+    //     if (streamer === null) {
+    //         throw new ValidationError('The number of votes for this streamer was not found.');
+    //     }
+    //
+    //     // req.body DOMPurify.sanitize
+    //
+    //     await streamer.update();
+    //
+    //     res.json(streamer);
+    // })
 
-        const streamer = await StreamerRecord.getOne(req.params.streamerId);
+    .put('/streamers/:id', async (req, res) => {
+
+        const streamer = await StreamerRecord.getOne(req.params.id);
 
         if (streamer === null) {
-            throw new ValidationError('The number of votes for this streamer was not found.');
+            throw new ValidationError('No such streamer found.');
         }
 
-        // req.body DOMPurify.sanitize
+        streamer.name = DOMPurify.sanitize(req.body.name);
+        streamer.platform = DOMPurify.sanitize(req.body.platform);
 
         await streamer.update();
 
         res.json(streamer);
+
     })
