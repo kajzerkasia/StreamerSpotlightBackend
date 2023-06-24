@@ -7,5 +7,6 @@ export interface StreamerEntity {
 
 export enum Status {
     Add = 'Add',
-    Save = 'Save'
+    Save = 'Save',
+    Delete = 'Remove',
 }
