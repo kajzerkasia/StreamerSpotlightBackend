@@ -60,6 +60,7 @@ export const streamerRouter = Router()
         }
 
         streamer.name = DOMPurify.sanitize(req.body.name);
+        streamer.description = DOMPurify.sanitize(req.body.description)
         streamer.platform = DOMPurify.sanitize(req.body.platform);
 
         await streamer.update();

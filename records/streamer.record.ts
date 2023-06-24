@@ -9,6 +9,7 @@ type StreamerRecordResults = [StreamerEntity[], FieldPacket[]];
 export class StreamerRecord implements StreamerEntity {
     public id: string;
     public name: string;
+    public description: string;
     public platform: string;
     public createdAt: Date;
 
@@ -16,12 +17,16 @@ export class StreamerRecord implements StreamerEntity {
         if (!obj.name || obj.name.length > 100) {
             throw new ValidationError('Enter the name of the streamer with a length of max. 100 characters.');
         }
+        if (!obj.description || obj.description.length > 500) {
+            throw new ValidationError('Enter the description of the streamer with a length of max. 500 characters.');
+        }
         if (!obj.platform || obj.platform.length > 100) {
             throw new ValidationError(`Enter the name of the streamer's platform with a length of max. 100 characters.`);
         }
 
         this.id = obj.id;
         this.name = obj.name;
+        this.description = obj.description;
         this.platform = obj.platform;
         this.createdAt = obj.createdAt;
     }
@@ -48,16 +53,17 @@ export class StreamerRecord implements StreamerEntity {
             throw new Error(`Cannot add something that already exists.`);
         }
 
-        await pool.execute("INSERT INTO `streamers`(`id`, `name`, `platform`, `createdAt`) VALUES(:id, :name, :platform, :createdAt)", this);
+        await pool.execute("INSERT INTO `streamers`(`id`, `name`, `description`, `platform`, `createdAt`) VALUES(:id, :name, :description, :platform, :createdAt)", this);
 
         return this.id;
     }
 
     async update() {
 
-        await pool.execute("UPDATE `streamers` SET `name` = :name, `platform` = :platform, WHERE `id` = :id", {
+        await pool.execute("UPDATE `streamers` SET `name` = :name, `description` = :description, `platform` = :platform, WHERE `id` = :id", {
             id: this.id,
             name: this.name,
+            description: this.description,
             platform: this.platform,
         });
 

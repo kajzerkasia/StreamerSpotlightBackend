@@ -15,6 +15,8 @@ const router = Router();
 
 router.use('/streamer', streamerRouter);
 
+app.use('/api', router);
+
 app.use(handleError);
 
 app.listen(3001, '0.0.0.0', () => {
