@@ -9,25 +9,30 @@ type StreamerRecordResults = [StreamerEntity[], FieldPacket[]];
 export class StreamerRecord implements StreamerEntity {
     public id: string;
     public name: string;
-    public description: string;
+    public streamerDescription: string;
     public platform: string;
+    public platformDescription: string;
     public createdAt: Date;
 
     constructor(obj: StreamerEntity) {
         if (!obj.name || obj.name.length > 100) {
             throw new ValidationError('Enter the name of the streamer with a length of max. 100 characters.');
         }
-        if (!obj.description || obj.description.length > 500) {
-            throw new ValidationError('Enter the description of the streamer with a length of max. 500 characters.');
+        if (!obj.streamerDescription || obj.streamerDescription.length > 500) {
+            throw new ValidationError(`Enter the streamer's description with a length of max. 500 characters.`);
         }
         if (!obj.platform || obj.platform.length > 100) {
             throw new ValidationError(`Enter the name of the streamer's platform with a length of max. 100 characters.`);
         }
+        if (!obj.platformDescription || obj.platformDescription.length > 500) {
+            throw new ValidationError(`Enter the platform's description with a length of max. 500 characters.`);
+        }
 
         this.id = obj.id;
         this.name = obj.name;
-        this.description = obj.description;
+        this.streamerDescription = obj.streamerDescription;
         this.platform = obj.platform;
+        this.platformDescription = obj.platformDescription;
         this.createdAt = obj.createdAt;
     }
 
@@ -53,18 +58,19 @@ export class StreamerRecord implements StreamerEntity {
             throw new Error(`Cannot add something that already exists.`);
         }
 
-        await pool.execute("INSERT INTO `streamers`(`id`, `name`, `description`, `platform`, `createdAt`) VALUES(:id, :name, :description, :platform, :createdAt)", this);
+        await pool.execute("INSERT INTO `streamers`(`id`, `name`, `streamerDescription`, `platform`, `platformDescription`, `createdAt`) VALUES(:id, :name, :streamerDescription, :platform, :platformDescription, :createdAt)", this);
 
         return this.id;
     }
 
     async update() {
 
-        await pool.execute("UPDATE `streamers` SET `name` = :name, `description` = :description, `platform` = :platform WHERE `id` = :id", {
+        await pool.execute("UPDATE `streamers` SET `name` = :name, `streamerDescription` = :streamerDescription, `platform` = :platform, `platformDescription` = :platformDescription WHERE `id` = :id", {
             id: this.id,
             name: this.name,
-            description: this.description,
+            streamerDescription: this.streamerDescription,
             platform: this.platform,
+            platformDescription: this.platformDescription,
         });
 
     }
@@ -73,7 +79,5 @@ export class StreamerRecord implements StreamerEntity {
         await pool.execute("DELETE FROM `streamers` WHERE `id` = :id", {
             id: this.id,
         })
-
     }
-
 }
