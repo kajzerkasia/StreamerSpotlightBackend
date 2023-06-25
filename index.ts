@@ -1,7 +1,7 @@
 import express, {json, Router} from "express";
 import cors from 'cors';
 import 'express-async-errors';
-import {handleError, ValidationError} from "./utils/errors";
+import {handleError} from "./utils/errors";
 import {streamerRouter} from "./routers/streamer.router";
 import {voteRouter} from "./routers/vote.router";
 
@@ -15,7 +15,9 @@ app.use(json());
 const router = Router();
 
 router.use('/streamer', streamerRouter);
-router.use('/vote', voteRouter)
+router.use('/vote', voteRouter);
+
+app.use('api', router);
 
 app.use(handleError);
 
