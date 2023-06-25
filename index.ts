@@ -17,7 +17,7 @@ const router = Router();
 router.use('/streamer', streamerRouter);
 router.use('/vote', voteRouter);
 
-app.use('api', router);
+app.use('/api', router);
 
 app.use(handleError);
 
