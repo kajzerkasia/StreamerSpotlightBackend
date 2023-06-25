@@ -1,6 +1,6 @@
 export interface VoteEntity {
-    id: string;
-    upvotes: number;
-    downvotes: number;
-    streamerId: string;
+    id?: string;
+    upvotes?: number;
+    downvotes?: number;
+    streamerId?: string;
 }

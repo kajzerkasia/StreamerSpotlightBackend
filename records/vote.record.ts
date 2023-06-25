@@ -14,7 +14,7 @@ export class VoteRecord implements VoteEntity {
     public streamerId: string;
 
     constructor(obj: VoteEntity) {
-        if (!obj.upvotes || obj.upvotes > 9 || !obj.downvotes || obj.downvotes > 9) {
+        if (obj.upvotes > 11 || obj.downvotes > 11) {
             throw new ValidationError('Count of the votes is too large.');
         }
 
@@ -24,12 +24,6 @@ export class VoteRecord implements VoteEntity {
         this.downvotes = obj.downvotes;
     }
 
-    static async findAll(): Promise<VoteEntity[]> {
-        const [results] = await pool.execute("SELECT * FROM `votes`") as VoteRecordResults;
-
-        return results.map(obj => new VoteRecord(obj));
-    }
-
     static async getOne(id: string): Promise<VoteRecord | null> {
         const [results] = await pool.execute("SELECT * from `votes` WHERE `id` = :id", {
             id,
@@ -37,12 +31,23 @@ export class VoteRecord implements VoteEntity {
         return results.length === 0 ? null : new VoteRecord(results[0]);
     }
 
-    static async findAllWithStreamerId(streamerId: string): Promise<VoteEntity[]> {
+    async insert(): Promise<string> {
+
+        if (!this.id) {
+            this.id = uuid();
+        } else {
+            throw new Error('Nie można dodać czegoś, co już istnieje.');
+        }
+        await pool.execute("INSERT INTO `votes`(`id`, `streamerId`, `upvotes`, `downvotes`) VALUES(:id, :streamerId, :upvotes, :downvotes)", this);
+        return this.id;
+    }
+
+    static async getOneByStreamerId(streamerId: string): Promise<VoteRecord | null> {
         const [results] = await pool.execute("SELECT * FROM `votes` WHERE `streamerId` = :streamerId", {
             streamerId,
         }) as VoteRecordResults;
 
-        return results.map(obj => new VoteRecord(obj));
+        return results.length === 0 ? null : new VoteRecord(results[0]);
     }
 
     async update() {
@@ -53,7 +58,5 @@ export class VoteRecord implements VoteEntity {
             downvotes: this.downvotes,
             streamerId: this.streamerId,
         });
-
     }
-
 }
