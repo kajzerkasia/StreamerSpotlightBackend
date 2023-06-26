@@ -38,13 +38,24 @@ export class StreamerRecord implements StreamerEntity {
     }
 
     static async getOne(streamerId: string): Promise<StreamerRecord | null> {
-        const [results] = await pool.execute("SELECT * from `streamers` WHERE `id` = :id", {
+        const [results] = await pool.execute("SELECT * FROM `streamers` WHERE `id` = :streamerId", {
             streamerId,
         }) as StreamerRecordResults;
         return results.length === 0 ? null : new StreamerRecord(results[0]);
     }
 
+    static async getOneByName(name: string): Promise<StreamerRecord | null> {
+        const [results] = await pool.execute("SELECT * from `streamers` WHERE `name` = :name", {
+            name,
+        }) as StreamerRecordResults;
+        return results.length === 0 ? null : new StreamerRecord(results[0]);
+    }
+
     async insert(): Promise<string> {
+        const existingStreamer = await StreamerRecord.getOneByName(this.name);
+        if (existingStreamer) {
+            throw new ValidationError('Streamer with the same name already exists.');
+        }
 
         if (!this.id || !this.createdAt) {
             this.id = uuid();
