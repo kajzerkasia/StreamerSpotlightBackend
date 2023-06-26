@@ -58,17 +58,6 @@ export class StreamerRecord implements StreamerEntity {
         return this.id;
     }
 
-    async update() {
-
-        await pool.execute("UPDATE `streamers` SET `name` = :name, `description` = :description, `platform` = :platform, WHERE `id` = :id", {
-            id: this.id,
-            name: this.name,
-            description: this.description,
-            platform: this.platform,
-        });
-
-    }
-
     async delete(): Promise<void> {
         await pool.execute("DELETE FROM `streamers` WHERE `id` = :id", {
             id: this.id,
