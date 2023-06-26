@@ -1,5 +1,6 @@
 import {Router} from "express";
 import {StreamerRecord} from "../records/streamer.record";
+import {ValidationError} from "../utils/errors";
 
 export const streamerRouter = Router()
 
@@ -20,4 +21,16 @@ export const streamerRouter = Router()
         await streamers.insert();
 
         res.json(streamers);
-    });
+    })
+
+    .delete('/streamers/:id', async (req, res) => {
+        const streamer = await StreamerRecord.getOne(req.params.id)
+
+        if (!streamer) {
+            throw new ValidationError('No such streamer found.');
+        }
+
+        await streamer.delete();
+
+        res.end();
+    })
