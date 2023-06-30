@@ -42,7 +42,7 @@
 
 1. Clone the repository:
 ```
-   git clone https://github.com/kajzerkasia/StreamerSpotlightFrontend.git
+   git clone https://github.com/kajzerkasia/StreamerSpotlightBackend.git
    ```
 2. Install dependencies:
  ```
