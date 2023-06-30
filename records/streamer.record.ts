@@ -19,9 +19,9 @@ export class StreamerRecord implements StreamerEntity {
         "Enter the name of the streamer with a length of max. 100 characters."
       );
     }
-    if (!obj.description || obj.description.length > 500) {
+    if (!obj.description || obj.description.length > 1000) {
       throw new ValidationError(
-        "Enter the description of the streamer with a length of max. 500 characters."
+        "Enter the description of the streamer with a length of max. 1000 characters."
       );
     }
     if (!obj.platform || obj.platform.length > 100) {
