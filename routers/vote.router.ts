@@ -43,34 +43,27 @@ export const voteRouter = Router()
     const { vote } = req.body;
 
     try {
-      // Pobierz rekord dotyczący danego streamera
       const voteRecord = await VoteRecord.getOneByStreamerId(streamerId);
 
       if (!voteRecord) {
-        // Rekord nie istnieje, możesz go utworzyć lub zwrócić odpowiedni błąd
         return res.status(404).json({ error: "Streamer not found" });
       }
 
-      // Aktualizuj liczbę głosów na podstawie wartości 'vote'
       if (vote === "upvote") {
         voteRecord.upvotes += 1;
       } else if (vote === "downvote") {
         voteRecord.downvotes += 1;
       } else {
-        // Nieprawidłowa wartość 'vote', zwróć odpowiedni błąd
         return res.status(400).json({ error: "Invalid vote value" });
       }
 
-      // Zapisz zaktualizowany rekord w bazie danych
       await voteRecord.update();
 
-      // Zwróć zaktualizowaną liczbę głosów
       res.json({
         upvotes: voteRecord.upvotes,
         downvotes: voteRecord.downvotes,
       });
     } catch (error) {
-      // Obsłuż błąd, jeśli wystąpił
       console.error(error);
       res.status(500).json({ error: "Internal server error" });
     }
