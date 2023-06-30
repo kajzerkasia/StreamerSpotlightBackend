@@ -1,36 +1,35 @@
-import {Router} from "express";
-import {StreamerRecord} from "../records/streamer.record";
-import {ValidationError} from "../utils/errors";
+import { Router } from "express";
+import { StreamerRecord } from "../records/streamer.record";
+import { ValidationError } from "../utils/errors";
 
 export const streamerRouter = Router()
+  .get("/streamers", async (req, res) => {
+    const streamers = await StreamerRecord.findAll();
 
-    .get('/streamers', async (req, res) => {
-        const streamers = await StreamerRecord.findAll();
+    res.json(streamers);
+  })
 
-        res.json(streamers);
-    })
+  .get("/streamer/:streamerId", async (req, res) => {
+    const streamer = await StreamerRecord.getOne(req.params.streamerId);
 
-    .get('/streamer/:streamerId', async (req, res) => {
-        const streamer = await StreamerRecord.getOne(req.params.streamerId);
+    res.json(streamer);
+  })
 
-        res.json(streamer);
-    })
+  .post("/streamers", async (req, res) => {
+    const streamers = new StreamerRecord(req.body);
+    await streamers.insert();
 
-    .post('/streamers', async (req, res) => {
-        const streamers = new StreamerRecord(req.body);
-        await streamers.insert();
+    res.json(streamers);
+  })
 
-        res.json(streamers);
-    })
+  .delete("/streamers/:id", async (req, res) => {
+    const streamer = await StreamerRecord.getOne(req.params.id);
 
-    .delete('/streamers/:id', async (req, res) => {
-        const streamer = await StreamerRecord.getOne(req.params.id)
+    if (!streamer) {
+      throw new ValidationError("No such streamer found.");
+    }
 
-        if (!streamer) {
-            throw new ValidationError('No such streamer found.');
-        }
+    await streamer.delete();
 
-        await streamer.delete();
-
-        res.end();
-    })
+    res.end();
+  });

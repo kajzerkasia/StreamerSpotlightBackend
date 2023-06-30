@@ -1,13 +1,13 @@
 export interface StreamerEntity {
-    id?: string;
-    name: string;
-    description?: string;
-    platform: string;
-    createdAt?: Date;
+  id?: string;
+  name: string;
+  description?: string;
+  platform: string;
+  createdAt?: Date;
 }
 
 export enum Status {
-    Add = 'Add',
-    Save = 'Save',
-    Delete = 'Remove',
+  Add = "Add",
+  Save = "Save",
+  Delete = "Remove",
 }
