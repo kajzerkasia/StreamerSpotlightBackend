@@ -19,14 +19,24 @@ export class StreamerRecord implements StreamerEntity {
         "Enter the name of the streamer with a length of max. 100 characters."
       );
     }
+    if (obj.name.length < 3) {
+      throw new ValidationError(
+          "Enter the name of the streamer with a length of min. 3 characters."
+      );
+    }
     if (!obj.description || obj.description.length > 1000) {
       throw new ValidationError(
         "Enter the description of the streamer with a length of max. 1000 characters."
       );
     }
-    if (!obj.platform || obj.platform.length > 100) {
+    if (obj.description.length < 10) {
       throw new ValidationError(
-        `Enter the name of the streamer's platform with a length of max. 100 characters.`
+          "Enter the description of the streamer with a length of min. 10 characters."
+      );
+    }
+    if (!obj.platform) {
+      throw new ValidationError(
+          "Select the streaming platform from the drop-down list."
       );
     }
 
