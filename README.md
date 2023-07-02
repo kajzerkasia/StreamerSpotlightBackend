@@ -50,7 +50,7 @@
  ```
 3. Run the application:
 ```
-   npm start
+   package.json -> scripts -> "start": "ts-node index.ts", or "start:dev": "tsnd index.ts",
  ```
 
 ## How to reach me
