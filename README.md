@@ -21,9 +21,9 @@
 
 #### Click on the screen below to go to the video that shows how the application works. ⬇️⬇️⬇️
 
-[![Watch the video](/src/assets/StreamerSpotlightApp.png)](https://youtu.be/pJa3ivuAMmg)
+[![Watch the video](/utils/assets/StreamerSpotlightApp.png)](https://youtu.be/pJa3ivuAMmg)
 
-[![Watch the video](/src/assets/StreamerSpotlightAppRecord.png)](https://youtu.be/pJa3ivuAMmg)
+[![Watch the video](/utils/assets/StreamerSpotlightAppRecord.png)](https://youtu.be/pJa3ivuAMmg)
 
 ## Technologies used
 
