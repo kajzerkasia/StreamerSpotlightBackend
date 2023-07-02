@@ -21,7 +21,9 @@
 
 #### Click on the screen below to go to the video that shows how the application works. ⬇️⬇️⬇️
 
-[![Watch the video](/public/assets/gym-training-planner-preview.png)](https://youtu.be/fUGJYWbEydE)
+[![Watch the video](/src/assets/StreamerSpotlightApp.png)](https://youtu.be/pJa3ivuAMmg)
+
+[![Watch the video](/src/assets/StreamerSpotlightAppRecord.png)](https://youtu.be/pJa3ivuAMmg)
 
 ## Technologies used
 
